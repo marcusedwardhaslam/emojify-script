@@ -4,28 +4,18 @@ import random
 import sys
 
 emoji_list = [
-    '👌',
-    '👏',
-    '😂',
-    '😛',
-    '💯',
-    '😤',
-    '😩',
-    '🤔',
-    '👀',
+    '👌', '👏', '😂', '😛', '💯',
+    '😤', '😩', '🤔', '👀', '😳',
+    '😜', '💩', '👻', '💪', '😏'
 ]
 
 
 def emojify(raw_str):
-    rtn = ''
-    for char in raw_str:
-        insert_emoji = bool(random.getrandbits(1))  # boolean insert switch
-        tmp = ' %s  ' % emoji_list[random.randint(
-            0,
-            len(emoji_list) - 1
-        )] if insert_emoji and char == ' ' else char
-        rtn += tmp
-    return rtn
+    return ''.join([' %s ' % emoji_list[random.randint(
+        0,
+        len(emoji_list) - 1
+    )] if random.getrandbits(1) and char == ' ' else char for char in raw_str])
+
 
 def main(args):
     try:
@@ -33,6 +23,10 @@ def main(args):
     except IndexError:
         print('No arguments, exiting...')
         exit(1)
+    except ValueError:
+        print('Argument was not a sequence of characters, exiting...')
+        exit(1)
+
     print(emojify(emojid))
 
 if __name__ == '__main__':
